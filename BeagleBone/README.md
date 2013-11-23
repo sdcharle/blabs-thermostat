@@ -27,6 +27,8 @@ to it working, we will figure out how to make the code fit on board and have ins
 
 ## Boot the board
 
+NOTE:  You may not need to hold down the button in step 4.
+
 1.  Make sure the BBB is unplugged
 
 2.  Put the micro SD card in the socket
@@ -41,14 +43,25 @@ to it working, we will figure out how to make the code fit on board and have ins
 
 ## Login to the board
 
-1.  If you are on the same network as the BBB you can ssh with the username *ubuntu* to the host name *beaglebone.local*.  If you are not on the same
-    network, you will need to find the board's IP address.  You then ssh into the board using the username *ubuntu* to that IP address.
+1.  You will need to determine the IP address of the BBB board.  How to do that depends on your router.  Once you find the IP address, you then ssh into
+    the board using the username **ubuntu** to that IP address.
 
 2.  The password is **ubuntu**.
 
-## Install the web server
+## Update the software
+
+1.  You need to update the software on the board.  Run these commands:
+    1.  **sudo apt-get update**
+    2.  **sudo apt-get upgrade**
+
+## Setup the web server
+
+The self signed SSL certificate was created using these directions: [http://www.akadia.com/services/ssh_test_certificate.html](http://www.akadia.com/services/ssh_test_certificate.html).  Since the key is checked into github, this certificate should not be used in a production system.
 
 1.  Run **sudo apt-get install lighttpd**
 
+2.  Copy files from **files** in this folder into the same folders on the BBB.
 
+3.  Restart the web server by running **sudo service lighttpd restart**
 
+4.  You can then test this by using your browser and going to **https://*ipaddress*/cgi-bin/go.py**
